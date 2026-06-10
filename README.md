@@ -1,7 +1,7 @@
 
 ## **Spatial Registration**
 
-This generalized pipeline provides real-time, cross-platform alignment of 3D CAD models onto physical targets using an Intel RealSense RGB-D camera. By utilizing a 5x5 ArUco marker as a dynamic coordinate anchor, the system computes the instantaneous 6-DOF (Degrees of Freedom) pose of the target. It then transforms and wraps the digital point cloud precisely over the physical geometry across live 2D and 3D visualizers
+This generalized pipeline provides real-time, cross-platform alignment of 3D CAD models onto physical targets using an Intel RealSense RGB-D camera. By utilizing a 5x5 ArUco marker as a dynamic coordinate anchor, the system computes the instantaneous 6-DOF pose of the target. It then transforms and wraps the digital point cloud precisely over the physical geometry across live 2D and 3D visualizers.
 
 ### **Mathematical Formulation and Coordinate Spaces**
 
@@ -11,13 +11,13 @@ The system operates across three distinct three-dimensional coordinate frames:
 * **Model Frame** (O): The static native origin of your reference 3D CAD model.
 
 #### **Transfomation Chain**
- $ \qquad T_{O}^{Cam} $ = $T_M^{Cam}$ x $T_O^M $
+$\qquad T_{O}^{Cam}$ = $T_M^{Cam}$ x $T_O^M $
 
  Where,
 
   $T_M^{Cam}$ = Live Tracking Matrix - A dynamic $4 \times 4$ homogeneous transformation matrix calculated at every frame. The pipeline utilizes OpenCV’s solvePnP algorithm, taking known 2D image pixel points and mapping them against the marker's real-world dimensions to extract rotation ($\mathbf{R}$) and translation ($\mathbf{t}$) vectors.
 
-  $T_O^M $ = Static Calibration Matrix - A rigid, fixed $4 \times 4$ matrix representing the transformation between the ArUco tag and the physical object. This is calculated once during an offline registration setup.
+  $T_{O}^{M}$ = Static Calibration Matrix - A rigid, fixed $4 \times 4$ matrix representing the transformation between the ArUco tag and the physical object. This is calculated once during an offline registration setup.
 
   **Note** - The Physical Object Frame and the CAD Model Frame are conceptually identical ($O$).Because the physical phantom is 3D printed directly from the digital CAD specifications, it acts as a 1:1 Digital Twin. It inherits the exact same fixed mathematical origin $(0,0,0)$ established in the design software. Treating the Model Frame and the Physical Object Frame as a single shared coordinate system ($O$) allows the matrix chain to transform the digital CAD coordinates and have them map onto the real-world physical object.
 
